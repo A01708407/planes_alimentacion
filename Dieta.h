@@ -3,18 +3,18 @@
 
 #include <iostream>
 #include <vector>
-#include <algorithm> // Necesario para std::remove
+#include <algorithm>
 using namespace std;
 
 class Dieta {
 private:
     string nombre;
-    string alimentos;
+    vector<string> alimentos;
     string fecha_creacion;
 
 public:
     // Constructor por parámetros
-    Dieta(string _nombre, string _alimentos, string _fecha_creacion) {
+    Dieta(string _nombre, vector<string> _alimentos, string _fecha_creacion) {
         nombre = _nombre;
         alimentos = _alimentos;
         fecha_creacion = _fecha_creacion;
@@ -25,7 +25,7 @@ public:
         return nombre;
     }
 
-    string get_alimentos() {
+    vector<string> get_alimentos() {
         return alimentos;
     }
 
@@ -38,7 +38,7 @@ public:
         nombre = _nombre;
     }
 
-    void set_alimentos(string _alimentos) {
+    void set_alimentos(vector<string> _alimentos) {
         alimentos = _alimentos;
     }
 
@@ -49,7 +49,11 @@ public:
     // Métodos
     void imprime_datos() {
         cout << "Nombre: " << nombre << endl;
-        cout << "Alimentos: " << alimentos << endl;
+        cout << "Alimentos: ";
+        for (const string& alimento : alimentos) {
+            cout << alimento << " ";
+        }
+        cout << endl;
         cout << "Fecha de creación: " << fecha_creacion << endl;
     }
 
@@ -62,13 +66,13 @@ public:
     }
 
     void agregar_alimento(string alimento) {
-        alimentos += ", " + alimento;  // Concatenar el nuevo alimento a la cadena
+        alimentos.push_back(alimento);
     }
 
     void eliminar_alimento(string alimento) {
-        size_t pos = alimentos.find(alimento);
-        if (pos != string::npos) {
-            alimentos.erase(pos, alimento.length());
+        auto it = find(alimentos.begin(), alimentos.end(), alimento);
+        if (it != alimentos.end()) {
+            alimentos.erase(it);
         }
     }
 };

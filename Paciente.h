@@ -19,17 +19,6 @@ private:
     vector<Dieta> dietas; // Agregación
 
 public:
-    // Constructor por parámetros
-    Paciente(int _edad, int _sexo, Medida _medidas, vector<string> _alergias, string _nombre, float _estatura, float _peso) {
-        edad = _edad;
-        sexo = _sexo;
-        medidas = _medidas;
-        alergias = _alergias;
-        nombre = _nombre;
-        estatura = _estatura;
-        peso = _peso;
-    }
-
     // Constructor por defecto
     Paciente() {}
 
@@ -140,6 +129,17 @@ public:
 
     void agregar_dieta(Dieta _dieta) {
         dietas.push_back(_dieta);
+    }
+
+    // Composición
+    Dieta agregar_dieta(string _nombre, vector<string> _alimentos, string _fecha_creacion) {
+        Dieta nueva = Dieta(_nombre, _alimentos, _fecha_creacion);
+        dietas.push_back(nueva);
+        return nueva;
+    }
+
+    void eliminar_dieta(int indice) {
+        dietas.erase(dietas.begin() + indice);
     }
 };
 
