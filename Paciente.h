@@ -130,7 +130,7 @@ public:
     void agregar_dieta(Dieta _dieta) {
         dietas.push_back(_dieta);
     }
-
+ 
     // Composición
     Dieta agregar_dieta(string _nombre, vector<string> _alimentos, string _fecha_creacion) {
         Dieta nueva = Dieta(_nombre, _alimentos, _fecha_creacion);
@@ -140,6 +140,11 @@ public:
 
     void eliminar_dieta(int indice) {
         dietas.erase(dietas.begin() + indice);
+    }
+
+    Medida agregar_medida(float _cintura, float _pecho, float _cadera) {
+        Medida nueva = Medida(_cintura, _pecho, _cadera);
+        return nueva;
     }
 };
 
