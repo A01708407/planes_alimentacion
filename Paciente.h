@@ -5,24 +5,39 @@
 #include "Medida.h"
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 class Paciente {
 private:
     int edad;
     int sexo;
-    Medida medidas; // Composición
+    Medida medidas; 
     vector<string> alergias;
     string nombre;
-    float estatura; // metros
-    float peso;
-    vector<Dieta> dietas; // Agregación
+    float estatura;
+    float peso;     
+    vector<Dieta> dietas;
 
 public:
-    // Constructor por defecto
-    Paciente() {}
+    // Constructores
+    Paciente() {
+        edad = 0;
+        sexo = 0;
+        nombre = "";
+        estatura = 0;
+        peso = 0;
+    }
 
-    // Getters
+    Paciente(int _edad, int _sexo, const vector<string>& _alergias, const string& _nombre, float _estatura, float _peso){
+        edad = _edad;
+        sexo = _sexo;
+        alergias = _alergias;
+        nombre = _nombre;
+        estatura = _estatura;
+        peso = _peso;
+    }
+
     int get_edad() {
         return edad;
     }
@@ -64,15 +79,15 @@ public:
         sexo = _sexo;
     }
 
-    void set_medidas(Medida _medidas) {
+    void set_medidas(const Medida& _medidas) {
         medidas = _medidas;
     }
 
-    void set_alergias(vector<string> _alergias) {
+    void set_alergias(const vector<string>& _alergias) {
         alergias = _alergias;
     }
 
-    void set_nombre(string _nombre) {
+    void set_nombre(const string& _nombre) {
         nombre = _nombre;
     }
 
@@ -84,38 +99,32 @@ public:
         peso = _peso;
     }
 
-    void set_dietas(vector<Dieta> _dietas) {
+    void set_dietas(const vector<Dieta>& _dietas) {
         dietas = _dietas;
     }
 
-    // Métodos
-    void imprime_datos() {
-        cout << "Nombre: " << nombre << endl;
-        cout << "Edad: " << edad << " años" << endl;
-        cout << "Sexo: " << (sexo == 0 ? "Femenino" : "Masculino") << endl;
-        cout << "Estatura: " << estatura << " m" << endl;
-        cout << "Peso: " << peso << " kg" << endl;
-        cout << "Alergias: ";
-        for (string& alergia : alergias) {
-            cout << alergia << " ";
-        }
+    void imprime_datos() const {
+        cout << "Nombre: " << nombre << endl
+             << "Edad: " << edad << " años" << endl
+             << "Sexo: " << (sexo == 0 ? "Femenino" : "Masculino") << endl
+             << "Estatura: " << estatura << " m" << endl
+             << "Peso: " << peso << " kg" << endl
+             << "Alergias: ";
+        for (const auto& alergia : alergias) cout << alergia << " ";
         cout << endl;
         medidas.imprime();
         cout << "Dietas: ";
-        for (Dieta& dieta : dietas) {
-            cout << dieta.get_nombre() << " ";
-        }
+        for (const auto& dieta : dietas) cout << dieta.get_nombre() << " ";
         cout << endl;
     }
 
-    float calcular_IMC() {
-        return peso / (estatura * estatura);
+    float calcular_IMC() const { 
+        return peso / (estatura * estatura); 
     }
 
-    void actualizar_informacion(int _edad, int _sexo, Medida _medidas, vector<string> _alergias, string _nombre, float _estatura, float _peso, vector<Dieta> _dietas) {
+    void actualizar_informacion(int _edad, int _sexo, const vector<string>& _alergias, const string& _nombre, float _estatura, float _peso, const vector<Dieta>& _dietas) {
         edad = _edad;
         sexo = _sexo;
-        medidas = _medidas;
         alergias = _alergias;
         nombre = _nombre;
         estatura = _estatura;
@@ -123,28 +132,26 @@ public:
         dietas = _dietas;
     }
 
-    void agregar_alergia(string _alergia) {
-        alergias.push_back(_alergia);
+    void agregar_alergia(const string& _alergia) { 
+        alergias.push_back(_alergia); 
     }
 
-    void agregar_dieta(Dieta _dieta) {
-        dietas.push_back(_dieta);
-    }
- 
-    // Composición
-    Dieta agregar_dieta(string _nombre, vector<string> _alimentos, string _fecha_creacion) {
-        Dieta nueva = Dieta(_nombre, _alimentos, _fecha_creacion);
-        dietas.push_back(nueva);
-        return nueva;
+    void eliminar_alergia(const string& alergia) {
+        auto it = find(alergias.begin(), alergias.end(), alergia);
+        if (it != alergias.end()) alergias.erase(it);
     }
 
-    void eliminar_dieta(int indice) {
-        dietas.erase(dietas.begin() + indice);
+    void agregar_dieta(const Dieta& dieta) { 
+        dietas.push_back(dieta); 
     }
 
-    Medida agregar_medida(float _cintura, float _pecho, float _cadera) {
-        Medida nueva = Medida(_cintura, _pecho, _cadera);
-        return nueva;
+    void eliminar_dieta(const Dieta& dieta) {
+        auto it = find(dietas.begin(), dietas.end(), dieta);
+        if (it != dietas.end()) dietas.erase(it);
+    }
+
+    void cambiar_medidas(float _cintura, float _pecho, float _cadera) {
+        medidas = Medida(_cintura, _pecho, _cadera);
     }
 };
 

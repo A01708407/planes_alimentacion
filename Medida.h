@@ -19,7 +19,11 @@ public:
     }
 
     // Constructor por defecto
-    Medida() : cintura(0), pecho(0), cadera(0) {}
+    Medida(){
+        cintura = 0;
+        pecho = 0;
+        cadera = 0;
+    }
 
     // Getters
     float get_cintura() const {
@@ -54,13 +58,8 @@ public:
         cout << "Cadera: " << cadera << " cm" << endl;
     }
 
-    float calcular_IMC() const {
-        // Un método para calcular el IMC basado en las medidas
-        return 0;
-    }
-
     void actualizar_medidas(float _cintura, float _pecho, float _cadera) {
-        cintura = _cintura;
+        cintura = _cintura;  
         pecho = _pecho;
         cadera = _cadera;
     }

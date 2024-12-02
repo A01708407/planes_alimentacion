@@ -1,4 +1,5 @@
-#include "Dieta.h"
+#include "Baja_peso.h"
+#include "Mantenimiento.h"
 #include "Medida.h"
 #include "Paciente.h"
 #include <iostream>
@@ -7,23 +8,32 @@
 using namespace std;
 
 int main() {
-    // Objeto clase dieta
-    Dieta dieta1("cetogénica", "Huevos, Aguacate, Aceite de coco", "2023-11-19");
-    dieta1.imprime_datos();
-    cout << dieta1.descripcion_dieta() << endl;
 
-    // Objeto clase medida
-    Medida medidas1(70, 90, 95);
-    medidas1.imprime();
+    vector<string> b2alimentos = {"Almendras","Carnes rojas","Amaranto"};
+    vector<string> c3alimentos = {"Leche","Fruta","Pollo"};
+    vector<string> alergias1 = {"Cacahuate", "Nuez", "Almendra"};
 
-    // Lista de dietas para el paciente
-    vector<Dieta> dietas;
-    dietas.push_back(dieta1);
+    Baja_peso b2 = Baja_peso("Base","B2",b2alimentos,"12/06/2008");
+    b2.imprime_datos();
+    cout << endl;
+    b2.agregar_alimento("Leche");
+    b2.eliminar_alimento("Almendras");
+    b2.imprime_datos();
+    cout << "------------------------------------------" << endl;
+    
+    Mantenimiento c3 = Mantenimiento(45.67,"C3",c3alimentos,"17/04/2005");
+    c3.imprime_datos();
+    cout << endl;
+    c3.set_nivel_cetosis(102.3);
+    c3.imprime_datos();
+    cout << "------------------------------------------" << endl;
 
-    // Objeto clase paciente
-    Paciente paciente1(30, 1, medidas1, {"Ninguna"}, "Juan Perez", 1.75, 75.0);
-    paciente1.set_dietas(dietas); // Establecer las dietas del paciente
-    paciente1.imprime_datos();
-
+    vector<Dieta> dietas1 = {b2, c3};
+    Paciente ricardo = Paciente(58,2,alergias1,"Ian",1.78,95.6);
+    ricardo.cambiar_medidas(70,80,95);
+    ricardo.actualizar_informacion(59,2,alergias1,"Ian Vázquez", 1.75, 90, dietas1);
+    ricardo.imprime_datos();
+    cout << endl;
+    
     return 0;
 }
